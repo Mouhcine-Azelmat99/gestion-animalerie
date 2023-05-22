@@ -10,13 +10,7 @@ class Vente{
 }
 window.onload=getData();
 
-// const product_form=document.getElementById("produits_form");
-// const nom_produit=document.getElementById("nom_produit");
-// const prix_produit=document.getElementById("prix_produit");
 const table_body =document.getElementById("ventes_table");
-// const addProduct_btn=document.getElementById("addProduct_btn");
-// const updateProduct_btn=document.getElementById("updateProduct_btn");
-// const product_id = document.getElementById("product_id");
 const error_alert= document.getElementById("error_alert_produits");
 
 
@@ -37,21 +31,12 @@ function addVenteInTable(e){
     colInfo.textContent=e.info;
     colDate.textContent=e.date;
 
-
-    const deleteBtn=document.createElement("button");
-    deleteBtn.setAttribute("class", "btn btn-danger mx-4");
-    deleteBtn.setAttribute("onclick",`deleteVente("${e.id}")`);
-    deleteBtn.textContent="Supprimer";
-    colAction.appendChild(deleteBtn);
-
-
     row.appendChild(colId);
     row.appendChild(colType);
     row.appendChild(colUser);
     row.appendChild(colInfo);
     row.appendChild(colMontant);
     row.appendChild(colDate);
-    row.appendChild(colAction);
 
     table_body.appendChild(row);
   }
@@ -101,23 +86,6 @@ function getData(){
 
     xhr.send();
   }
-
-function deleteVente(id){
-    var xhr = new XMLHttpRequest();
-    var url = "http://127.0.0.1:8000/api/ventes/"+id;
-
-    xhr.open("DELETE", url, true);
-
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-        console.log("Delete request successful");
-        getData();
-      }
-    };
-
-    xhr.send();
-}
-
 
 
 // Search

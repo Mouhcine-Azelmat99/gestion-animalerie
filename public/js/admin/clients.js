@@ -72,6 +72,7 @@ function addUserInTable(e){
 function resetColumns(){
     user_id.value=null;
     nom_user.value=null;
+    prenom_user.value=null;
     tel_user.value=null;
     adress_user.value=null;
     email_user.value=null;
@@ -98,7 +99,7 @@ function editUser(id){
     if (xhr.readyState === 4 && xhr.status === 200) {
         var response = JSON.parse(xhr.responseText);
         nom_user.value=response.nom;
-        user_id.value=response.nom;
+        user_id.value=response.id;
         prenom_user.value=response.prenome;
         tel_user.value=response.tel;
         adress_user.value=response.adress;
@@ -188,17 +189,19 @@ function updateUser(){
     var url = "http://127.0.0.1:8000/api/users/"+id;
     var payload = {
         nom : nom_user.value,
-        prenome : tel_user.value,
-        tel : adress_user.value,
-        adress : email_user.value,
-        email : password_user.value,
+        prenome : prenom_user.value,
+        tel : tel_user.value,
+        adress : adress_user.value,
+        email : email_user.value,
         password : password_user.value,
     };
+    console.log(payload);
     xhr.open("PUT", url, true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = function() {
     if (xhr.readyState === 4 && xhr.status === 200) {
         var response = JSON.parse(xhr.responseText);
+        alert("Le client est modifier");
         addUser_btn.style.display ='block';
         updateUser_btn.style.display ='none';
         resetColumns();

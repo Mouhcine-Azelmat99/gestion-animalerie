@@ -39,12 +39,12 @@ class ReservationController extends Controller
         $data=Reservation::join('users','reservations.user_id','=', 'users.id')
         ->join('produits','reservations.product_id','=', 'produits.id')
         ->orderBy('id', 'DESC')
-        ->get(['reservations.*','users.nom as user_nom','users.prenome','produits.nom as produit_nom']);
+        ->get(['reservations.*','users.nom as user_nom','users.prenome','produits.nom as produit_nom','produits.prix']);
 
         $data2=Reservation::join('users','reservations.user_id','=', 'users.id')
         ->join('animals','reservations.animal_id','=', 'animals.id')
         ->orderBy('id', 'DESC')
-        ->get(['reservations.*','users.nom as user_nom','users.prenome','animals.espece','animals.race']);
+        ->get(['reservations.*','users.nom as user_nom','users.prenome','animals.espece','animals.race','animals.prix']);
 
         return response()->json([$data,$data2]);
     }
@@ -97,24 +97,32 @@ class ReservationController extends Controller
             return response()->json($data);
         }
 
-        public function confirmer(Request $request, $id)
+        public function confirmerReservation(Request $request, $id)
         {
             $res=Reservation::find($id);
-            if($res->animal_id){
-                $montant=$res->animal->prix;
-            }else if($res->product_id ){
-                $montant=$res->produits->prix;
-            }
-            $res->etat="confirme";
+            $res->etat=$request->etat;
             $res->update();
+
             $vente=new Vente();
             $vente->type=$res->type;
             $vente->user_id=$res->user_id;
             $vente->product_id=$res->product_id;
             $vente->animal_id=$res->animal_id;
-            $vente->montant=$montant;
+            $vente->montant=$request->montant;
             $vente->save();
-            return redirect()->back()->with('msg',"reservation confirmed");
+            if($res){
+                $data=[
+                    'status'=>"success",
+                    'message'=>"Reservation item has been confirmed successfully"
+                ];
+            }
+            else{
+                $data=[
+                    'status'=>"danger",
+                    'message'=>"Reservation cannot confirmed"
+                ];
+            }
+            return response()->json($data);
         }
 
 }

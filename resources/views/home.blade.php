@@ -39,6 +39,14 @@
                     </h1>
                 </div>
             </div>
+            <div class="col-lg-6 my-3">
+                <div class="bg-primary p-5">
+                    <h2 class="text-center">Ventes</h2>
+                    <h1 class="text-center">
+                        {{ $data['ventes'] }}
+                    </h1>
+                </div>
+            </div>
         </div>
     </div>
     </div>

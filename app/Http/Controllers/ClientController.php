@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ClientController extends Controller
 {
@@ -13,12 +14,11 @@ class ClientController extends Controller
     //     return view("admin.Users",compact('Users'));
     // }
 
-        public function getUserId(){
-            // $user_id=Auth::id();
-            // return $user_id;
-            $data=['user_id'=>"1"];
-            return response()->json($data);
-        }
+    public function getUserId(){
+        $user_id=Auth::id();
+        $data=['user_id'=>$user_id];
+        return response()->json($data);
+    }
 
     public function getData(){
         $data=User::all();
@@ -29,6 +29,10 @@ class ClientController extends Controller
         $data=User::find($id);
         return response()->json($data);
     }
+    public function getCurrentUser(){
+        $user=Auth::user();
+        return response()->json($user);
+    }
 
     public function store(Request $request)
     {
@@ -38,8 +42,8 @@ class ClientController extends Controller
            'tel' => $request->tel,
            'adress' => $request->adress,
            'email' => $request->email,
-           'password' => $request->password,
-       ]);
+           'password' => Hash::make($request->password)
+        ]);
        if($res){
         $data=[
             'status'=>"success",
@@ -57,16 +61,16 @@ class ClientController extends Controller
 
     public function update(Request $request,$id)
     {
-        $data=[
-            'nom' => $request->nom,
-            'prenome' => $request->prenome,
-            'tel' => $request->tel,
-            'adress' => $request->adress,
-            'email' => $request->email,
-            'password' => $request->password
-          ];
-        $prod = User::find($id);
-        $res=$prod->update($data);
+        $user = User::find($id);
+        $user->nom=$request->nom;
+        $user->prenome=$request->prenome;
+        $user->tel=$request->tel;
+        $user->adress=$request->adress;
+        $user->email=$request->email;
+        if($request->password){
+            $user->password=Hash::make($request->password);
+        }
+        $res=$user->update();
         if($res){
             $data=[
                 'status'=>"success",

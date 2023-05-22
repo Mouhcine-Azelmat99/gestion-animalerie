@@ -47,6 +47,14 @@
                     </h1>
                 </div>
             </div>
+            <div class="col-lg-6 my-3">
+                <div class="bg-primary p-5">
+                    <h2 class="text-center">Reservations</h2>
+                    <h1 class="text-center">
+                        {{ $data['reservations'] }}
+                    </h1>
+                </div>
+            </div>
         </div>
         <div class="row py-5">
             @if (Session::has('msg'))

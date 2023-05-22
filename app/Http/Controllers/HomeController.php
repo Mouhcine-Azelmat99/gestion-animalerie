@@ -8,6 +8,7 @@ use App\Models\Reservation;
 use App\Models\User;
 use App\Models\Vente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -30,7 +31,7 @@ class HomeController extends Controller
     public function index()
     {
         $data=[
-            'ventes'=> Vente::count(),
+            'ventes'=> Vente::where('user_id',Auth::id())->count(),
             'animaux'=> Animal::count(),
             'produits'=> Produit::count(),
             'reservations'=> Reservation::count(),

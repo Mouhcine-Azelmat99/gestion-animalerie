@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Animal;
 use App\Models\Produit;
+use App\Models\Reservation;
 use App\Models\User;
 use App\Models\Vente;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ class AdminController extends Controller
     public function index(){
         $data=[
             'ventes'=> Vente::count(),
+            'reservations'=> Reservation::count(),
             'animaux'=> Animal::count(),
             'produits'=> Produit::count(),
             'users'=> User::count(),

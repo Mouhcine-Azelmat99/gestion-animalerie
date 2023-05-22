@@ -27,7 +27,6 @@ Ventes
                 <th scope="col">Info sur Vente</th>
                 <th scope="col">Montant</th>
                 <th scope="col">Date</th>
-                <th scope="col">Action</th>
             </tr>
             </thead>
             <tbody id="ventes_table">

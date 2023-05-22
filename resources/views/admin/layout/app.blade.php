@@ -20,6 +20,7 @@
                 <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-warning text-decoration-none">
                     <span class="fs-5 d-none d-sm-inline">Animalerie Admin</span>
                 </a>
+                <hr>
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start text-white" id="menu">
                     <li class="nav-item my-3">
                         <a href="{{ route('dashboard') }}" class="nav-link text-white align-middle px-0">
@@ -28,24 +29,29 @@
                     </li>
                     <li class="nav-item my-2">
                         <a href="{{ route('animaux') }}" class="nav-link text-white px-0 align-middle">
-                            <i class="fa-solid fa-futbol"></i> <span class="ms-1 d-none d-sm-inline">Animaux</span> </a>
+                            <i class="fas fa-dog"></i><span class="ms-1 d-none d-sm-inline">Animaux</span> </a>
                     </li>
                     <li class="nav-item my-2">
                         <a href="{{ route('produits.index') }}" class="nav-link text-white px-0 align-middle">
-                            <i class="fas fa-bars"></i> <span class="ms-1 d-none d-sm-inline">Produits</span> </a>
+                            <i class="fas fa-shopping-bag"></i><span class="ms-1 d-none d-sm-inline">Produits</span> </a>
                     </li>
                     <li class="nav-item my-2">
                         <a href="{{ route('users') }}" class="nav-link text-white px-0 align-middle">
-                            <i class="fas fa-bars"></i> <span class="ms-1 d-none d-sm-inline">Clients</span> </a>
+                            <i class="fas fa-users"></i><span class="ms-1 d-none d-sm-inline">Clients</span> </a>
                     </li>
                     <li class="nav-item my-2">
                         <a href="{{ route('ventes.index') }}" class="nav-link text-white px-0 align-middle">
-                            <i class="fas fa-bars"></i> <span class="ms-1 d-none d-sm-inline">Ventes</span> </a>
+                            <i class="fas fa-sack-dollar"></i> <span class="ms-1 d-none d-sm-inline">Ventes</span> </a>
                     </li>
                     <li class="nav-item my-2">
                         <a href="{{ route('reservations.admin') }}" class="nav-link text-white px-0 align-middle">
-                            <i class="fas fa-bars"></i> <span class="ms-1 d-none d-sm-inline">Reservations</span> </a>
+                            <i class="fas fa-clipboard-list"></i> <span class="ms-1 d-none d-sm-inline">Reservations</span> </a>
                     </li>
+                    <li class="nav-item my-2">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                            <button class="btn btn-danger">Logout</button>
+                            @csrf
+                    </form>
                 </ul>
             </ul>
             </div>

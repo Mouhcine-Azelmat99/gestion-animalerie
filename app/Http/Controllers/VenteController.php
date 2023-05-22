@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 
 class VenteController extends Controller
 {
-    // public function index(){
-    //     $produits=Vente::all();
-    //     return view("admin.produits",compact('produits'));
-    // }
+    public function index(){
+        $ventes=Vente::all();
+        return view("users.ventes",compact('ventes'));
+    }
 
     public function getData(){
         // $data=Vente::all();
