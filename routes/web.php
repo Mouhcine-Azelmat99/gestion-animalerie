@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\VenteController;
@@ -19,9 +20,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',[HomeController::class,'index'])->name('home');
 Route::get('admin/dashboard',[AdminController::class,'index'])->name('dashboard');
 
 Route::get('admin/animaux',[AnimalController::class,'index'])->name('animaux');
@@ -81,3 +80,11 @@ Route::delete('api/reservations/{id}',[ReservationController::class,'destroy']);
 
 
 Route::get('api/user/id',[ClientController::class,'getUserId']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

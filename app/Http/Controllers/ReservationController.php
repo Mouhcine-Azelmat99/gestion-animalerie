@@ -36,15 +36,15 @@ class ReservationController extends Controller
 
     public function getData(){
         // $data=Reservation::all();
-        $data=Reservation::join('users','ventes.user_id','=', 'users.id')
-        ->join('produits','ventes.product_id','=', 'produits.id')
+        $data=Reservation::join('users','reservations.user_id','=', 'users.id')
+        ->join('produits','reservations.product_id','=', 'produits.id')
         ->orderBy('id', 'DESC')
-        ->get(['ventes.*','users.nom as user_nom','users.prenome','produits.nom as produit_nom']);
+        ->get(['reservations.*','users.nom as user_nom','users.prenome','produits.nom as produit_nom']);
 
-        $data2=Reservation::join('users','ventes.user_id','=', 'users.id')
-        ->join('animals','ventes.animal_id','=', 'animals.id')
+        $data2=Reservation::join('users','reservations.user_id','=', 'users.id')
+        ->join('animals','reservations.animal_id','=', 'animals.id')
         ->orderBy('id', 'DESC')
-        ->get(['ventes.*','users.nom as user_nom','users.prenome','animals.espece','animals.race']);
+        ->get(['reservations.*','users.nom as user_nom','users.prenome','animals.espece','animals.race']);
 
         return response()->json([$data,$data2]);
     }
@@ -97,24 +97,23 @@ class ReservationController extends Controller
             return response()->json($data);
         }
 
-        public function confirmer(Request $req,$id)
+        public function confirmer(Request $request, $id)
         {
             $res=Reservation::find($id);
             if($res->animal_id){
                 $montant=$res->animal->prix;
-            }else{
-                $montant=$res->produit->prix;
+            }else if($res->product_id ){
+                $montant=$res->produits->prix;
             }
             $res->etat="confirme";
             $res->update();
-            dd($res->animal_id);
-            Vente::create([
-                'type' =>$res->type,
-                'animal_id ' =>$res->animal_id ,
-                'product_id ' =>$res->product_id ,
-                'montant' =>$montant,
-                'user_id' =>$res->user_id,
-            ]);
+            $vente=new Vente();
+            $vente->type=$res->type;
+            $vente->user_id=$res->user_id;
+            $vente->product_id=$res->product_id;
+            $vente->animal_id=$res->animal_id;
+            $vente->montant=$montant;
+            $vente->save();
             return redirect()->back()->with('msg',"reservation confirmed");
         }
 

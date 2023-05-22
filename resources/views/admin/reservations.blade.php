@@ -43,11 +43,13 @@ Reservations
                         <td>{{ $element->user_nom }} {{ $element->prenome }}</td>
                         <td>{{ $element->etat }}</td>
                         <td>
-                            <form action="{{ route('reservations.confirmer',$element->id) }}" method="POST">
-                                @csrf
-                                @method('PUT')
-                                <button class="btn btn-danger">Confirmer</button>
-                            </form>
+                            @if($element->etat == "attente")
+                                <form action="{{ route('reservations.confirmer',$element->id) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <button class="btn btn-danger">Confirmer</button>
+                                </form>
+                            @endif
                         </td>
                     </tr>
                 @endforeach
@@ -59,11 +61,13 @@ Reservations
                         <td>{{ $element->user_nom }} {{ $element->prenome }}</td>
                         <td>{{ $element->etat }}</td>
                         <td>
-                            <form action="{{ route('reservations.confirmer',$element->id) }}" method="POST">
-                                @csrf
-                                @method('PUT')
-                                <button class="btn btn-danger">Confirmer</button>
-                            </form>
+                            @if($element->etat === "attente")
+                                <form action="{{ route('reservations.confirmer',$element->id) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <button class="btn btn-danger">Confirmer</button>
+                                </form>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

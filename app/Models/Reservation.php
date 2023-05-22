@@ -26,7 +26,7 @@ class Reservation extends Model
     public function animal(){
         return $this->belongsTo(Animal::class);
     }
-    public function produit(){
+    public function produits(){
         return $this->belongsTo(Produit::class);
     }
 
